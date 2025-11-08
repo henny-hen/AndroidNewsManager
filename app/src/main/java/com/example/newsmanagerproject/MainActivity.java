@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements DownloadArticlesT
             if (userId != null && authType != null && apiKey != null && username != null) {
                 ModelManager mm = ModelManager.getInstance();
                 mm.stayLoggedIn(userId, authType, apiKey, username);
-                Toast.makeText(this, "Welcome back, " + username + "!", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(this, "Welcome back, " + username + "!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements DownloadArticlesT
         updateCategorySpinner();
         filterArticlesByCategory();
         
-        Toast.makeText(this, "Loaded " + articles.size() + " articles", Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, "Loaded " + articles.size() + " articles", Toast.LENGTH_SHORT).show();
     }
     
     private void updateCategorySpinner() {
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements DownloadArticlesT
         }
         
         adapter.notifyDataSetChanged();
-        Toast.makeText(this, "Showing " + articleList.size() + " articles", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Showing " + articleList.size() + " articles", Toast.LENGTH_SHORT).show();
     }
 
     @Override

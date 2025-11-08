@@ -47,7 +47,7 @@
             android:id="@+id/detail_title_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Article Title"
+            android:text=""
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@android:color/black" />
@@ -56,7 +56,7 @@
             android:id="@+id/detail_subtitle_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subtitle"
+            android:text=""
             android:textSize="18sp"
             android:textStyle="italic"
             android:layout_marginTop="8dp"
@@ -66,7 +66,7 @@
             android:id="@+id/detail_category_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category: Technology"
+            android:text=""
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:layout_marginTop="8dp" />
@@ -83,7 +83,7 @@
             android:id="@+id/detail_abstract_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Abstract text goes here"
+            android:text=""
             android:textSize="16sp"
             android:textStyle="italic"
             android:layout_marginTop="16dp" />
@@ -92,7 +92,7 @@
             android:id="@+id/detail_body_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Body text goes here"
+            android:text=""
             android:textSize="14sp"
             android:layout_marginTop="16dp"
             android:lineSpacingExtra="4dp" />
@@ -108,7 +108,7 @@
             android:id="@+id/detail_updateDate_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Last updated: 2025-01-01"
+            android:text=""
             android:textSize="12sp"
             android:textColor="@android:color/darker_gray" />
 
@@ -116,7 +116,7 @@
             android:id="@+id/detail_userId_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User ID: 1"
+            android:text=""
             android:textSize="12sp"
             android:textColor="@android:color/darker_gray"
             android:layout_marginTop="4dp" />
@@ -129,6 +129,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/upload_image_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Update Article Image"

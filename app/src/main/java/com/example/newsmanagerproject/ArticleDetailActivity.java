@@ -38,6 +38,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
     private TextView bodyTextView;
     private TextView updateDateTextView;
     private TextView userIdTextView;
+
+    private TextView uploadImageTextView;
     private ImageView articleImageView;
     private Button selectImageButton;
     private Button uploadImageButton;
@@ -71,10 +73,30 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
         selectImageButton = findViewById(R.id.select_image_button);
         uploadImageButton = findViewById(R.id.upload_image_button);
         progressBar = findViewById(R.id.detail_progressBar);
+        uploadImageTextView = findViewById(R.id.upload_image_textView);
 
         selectImageButton.setOnClickListener(v -> openImagePicker());
         uploadImageButton.setOnClickListener(v -> uploadImage());
         uploadImageButton.setEnabled(false);
+        
+        // Check if user is logged in and enable/disable image upload functionality
+        updateImageUploadAccess();
+    }
+    
+    private void updateImageUploadAccess() {
+        boolean isLoggedIn = ModelManager.getInstance().isLoggedIn();
+        
+        if (isLoggedIn) {
+            // User is logged in - enable image upload functionality
+            selectImageButton.setVisibility(View.VISIBLE);
+            uploadImageButton.setVisibility(View.VISIBLE);
+            uploadImageTextView.setVisibility(View.VISIBLE);
+        } else {
+            // User is not logged in - hide image upload functionality
+            selectImageButton.setVisibility(View.GONE);
+            uploadImageButton.setVisibility(View.GONE);
+            uploadImageTextView.setVisibility(View.GONE);
+        }
     }
 
     private void setupToolbar() {
@@ -87,7 +109,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
         String articleTitle = intent.getStringExtra("ARTICLE_TITLE");
 
         if (articleId == -1) {
-            Toast.makeText(this, "Error: Invalid article", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Error: Invalid article", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -118,8 +140,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
                 e.printStackTrace();
                 runOnUiThread(() -> {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(this, "Error loading article: " + e.getMessage(), 
-                                 Toast.LENGTH_LONG).show();
+                   // Toast.makeText(this, "Error loading article: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
             }
         });
@@ -176,6 +197,12 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
     }
 
     private void openImagePicker() {
+        // Check if user is logged in before allowing image selection
+        if (!ModelManager.getInstance().isLoggedIn()) {
+     //       Toast.makeText(this, "You must be logged in to modify article images", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
@@ -191,22 +218,28 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
                 selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 articleImageView.setImageBitmap(selectedImage);
                 uploadImageButton.setEnabled(true);
-                Toast.makeText(this, "Image selected. Click Upload to save.", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(this, "Image selected. Click Upload to save.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void uploadImage() {
+        // Check if user is logged in before allowing upload
+        if (!ModelManager.getInstance().isLoggedIn()) {
+          //  Toast.makeText(this, "You must be logged in to modify article images", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         if (selectedImage == null) {
-            Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (article == null) {
-            Toast.makeText(this, "Article not loaded", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "Article not loaded", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -233,7 +266,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements UploadIm
             Toast.makeText(this, "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
             selectedImage = null;
         } else {
-            Toast.makeText(this, "Upload failed: " + message, Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, "Upload failed: " + message, Toast.LENGTH_LONG).show();
             uploadImageButton.setEnabled(true);
         }
     }
